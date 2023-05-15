@@ -25,8 +25,21 @@ export class TasksController {
   }
 
   @Get(':id')
-  getTaskById(@Param('id') id: string): Promise<Task> {
-    return this.taskservice.getTaskById(id);
+  async getTaskById(@Param('id') id: string): Promise<{ success: Boolean, message?: string, task?: Task }> {
+	let task;
+	try {
+    	task = await this.taskservice.getTaskById(id);
+	} catch (error) {
+		return {
+			success: false,
+			message: "fuuuuuuuu"
+		}
+	}
+
+	return {
+		success: true,
+		task
+	}
   }
 
   @Post()
